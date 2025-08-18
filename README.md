@@ -1,12 +1,25 @@
-# React + Vite
+# ui building for makefriends
+1.install vite+react
+2.install tailwind css
+3.install daisyUI css-framework
+4.follow the documents for installing daisyUI & tailwindss
+5.install react router dom
+6.make routes for child and parent componets
+7.create login,logout,profile componets 
+8.create login forms and create async functions for login api call
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## note
+when you call the login api it returns cors error cause it doesnt match the ports of frontend and backend server,so you have to install "cors" from npm.
 
-Currently, two official plugins are available:
+in the backend
+1.npm i cors
+2.const cors=require("cors")
+3.app.use(cors({
+    origin:"htpp://localhpost/5173" //frontend link
+    credentials:true
+}))
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+in the frontend
+1.const data=await axios.post("http://localhost/login",{email:email,password:password},{withCredentials:true})
+then you get cookie in the application cookies
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -1,18 +1,31 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {addUser} from "../utils/userSlice"
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [email,setEmail]=useState("")
-    const [password,setPassword]=useState("")
+    const [email,setEmail]=useState("iyer@gmail.com")
+    const [password,setPassword]=useState("Iyer2242@")
+    const [error,setError]=useState("")
+    const navigate=useNavigate()
+   
+    const dispatch=useDispatch()
+    
     const handleLogin=async()=>{
         try{
-            const login=await axios.post("http://localhost:7777/login",{
+            const res=await axios.post("http://localhost:7777/login",{
                 email:email,
                 password:password
         },{withCredentials:true})
 
+       
+        dispatch(addUser(res.data))
+        setError("")
+        navigate("/feed")
         }catch(err){
-           console.error(err)
+           setError(err?.response?.data.message)
+           console.log(err)
         }
     }
   return (
@@ -25,6 +38,9 @@ const Login = () => {
             <legend className="fieldset-legend mx-16 ">Password:</legend>
             <input type="text" value={password} onChange={(e)=>setPassword(e.target.value)} className="input"  />
           </fieldset>
+          <div>
+            <p className="text-red-500">{error}</p>
+          </div>
           <div className="card-actions">
             <button className="btn btn-primary" onClick={handleLogin}>Login</button>
           </div>

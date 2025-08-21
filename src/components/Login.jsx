@@ -22,7 +22,7 @@ const Login = () => {
        
         dispatch(addUser(res.data))
         setError("")
-        navigate("/feed")
+         return navigate("/")
         }catch(err){
            setError(err?.response?.data.message)
            console.log(err)

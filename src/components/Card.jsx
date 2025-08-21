@@ -18,8 +18,7 @@ const Card = ({data}) => {
         </div>
         <h2>{gender}</h2>
         <p>
-          A card component has a figure, a body part, and inside body there are
-          title and actions parts
+          {about}
         </p>
         <div className="card-actions justify-center">
           <button className="btn btn-secondary">Ignore</button>

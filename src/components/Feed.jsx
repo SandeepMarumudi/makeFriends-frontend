@@ -1,9 +1,10 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+
 import BASE_URL from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
 import Card from './Card'
+import { useEffect } from 'react'
 
 const Feed = () => {
     const dispatch=useDispatch()
@@ -13,7 +14,7 @@ const Feed = () => {
         if(feed) return 
         try{
             const res=await axios.get(BASE_URL+"/feed",{withCredentials:true})
-         
+            console.log("feed")
             dispatch(addFeed(res.data))
            
         }catch(err){
@@ -21,17 +22,20 @@ const Feed = () => {
         }
     }
 
-    useEffect(()=>{
-        fetchFeedData()
-    },[])
-
+   
+useEffect(()=>{
+  fetchFeedData()
+},[])
+  
   return (
-    <>
-   {
-   feed&&(
-        feed.map((each,index)=><Card data={each} />)
-    )
-   }
+
+  <>
+    { feed ? (
+      <Card data={feed[0]} />
+    ) : (
+      <p>No Users Found</p>
+    )}
+
     </>
   )
 }

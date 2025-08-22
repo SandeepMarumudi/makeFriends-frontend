@@ -10,9 +10,10 @@ const Connections = () => {
   const connections = useSelector((store) => store.connections);
 
   const fetchConnections = async () => {
+    
     if (connections) return;
     try {
-      const res = await axios.get(BASE_URL + "/user/connections",{withCredentials:true});
+      const res = await axios.get(BASE_URL +"/user/connections",{withCredentials:true});
       console.log(res.data.data);
       dispatch(addConnection(res.data.data));
     } catch (err) {

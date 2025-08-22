@@ -9,8 +9,8 @@ import Toast from "./Toast";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
-  const [firstName, setFirstName] = useState(user?.firstName);
-  const [lastName, setLastName] = useState(user?.lastName);
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
   const [gender, setGender] = useState(user?.gender);
   const [age, setAge] = useState(user?.age);
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);

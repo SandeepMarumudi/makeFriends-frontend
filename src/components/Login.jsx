@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import BASE_URL from "../utils/constants";
 
 const Login = () => {
-  const [loginForm, setLoginForm] = useState(true);
+  const [loginForm, setLoginForm] = useState(false);
   const [firstName,setFirstName]=useState("")
   const [lastName,setLastName]=useState("")
   const [email, setEmail] = useState("");
@@ -39,9 +39,12 @@ const Login = () => {
     try{
       const res=await axios.post(BASE_URL+"/signup",{firstName,lastName,email,password},{withCredentials:true})
       dispatch(addUser(res.data.data))
+        setError("");
       return navigate("/profile")
+      
  
     }catch(err){
+       setError(err?.response?.data.message);
       console.log(err)
     }
 

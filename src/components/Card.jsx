@@ -22,8 +22,8 @@ const Card = ({data}) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 my-5">
 
-    <div className="card bg-base-100 w-64 h-[450px] shadow-md">
-      <figure >
+    <div className="card bg-base-100 w-64  shadow-md">
+      <figure>
         <img
           src={photoUrl}
           alt="Shoes"

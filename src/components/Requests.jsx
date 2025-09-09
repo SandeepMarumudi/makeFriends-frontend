@@ -8,8 +8,10 @@ import HorizontalCard from './HorizontalCard'
 const Requests = () => {
     const dispatch=useDispatch()
     const requestsReceived=useSelector((store)=>store.requests)
+  
+
     const fetchRequests=async()=>{
-        if(requestsReceived) return
+        if(requestsReceived.length>0) return
         try{
             const res=await axios.get(BASE_URL+"/user/requests/received",{withCredentials:true})
             console.log(res.data.data)
@@ -21,16 +23,15 @@ const Requests = () => {
 
     useEffect(()=>{
         fetchRequests()
-            console.log("storedata:",requestsReceived)
     },[])
 
   return (
     <>
-    <div>Requests</div>
+ 
     {
      
-        requestsReceived && requestsReceived.length>0?
-        (requestsReceived.map((each)=><HorizontalCard user={each}/>)):<p>no requests found</p>
+       requestsReceived.length>0?
+        (requestsReceived.map((each)=><HorizontalCard user={each.fromUserId} id={each._id}/>)):<p>no requests found</p>
       
     }
     </>

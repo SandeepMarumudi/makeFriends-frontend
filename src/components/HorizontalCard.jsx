@@ -4,16 +4,16 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRequest } from "../utils/requestSlice";
 
-const HorizontalCard = ({user}) => {
-  const {firstName,lastName,photoUrl,age,gender}=user.fromUserId
-  const {_id,status}=user
- 
+const HorizontalCard = ({user,id}) => {
+
+const {firstName, lastName, photoUrl, age, gender } = user;
+  
   const dispatch=useDispatch()
 
   const reviewHandleRequest=async(status)=>{
     try{
-      const res=await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true})
-      dispatch(removeRequest(_id))
+      const res=await axios.post(BASE_URL+"/request/review/"+status+"/"+id,{},{withCredentials:true})
+      dispatch(removeRequest(id))
     }catch(err){
      console.log(err)
     }

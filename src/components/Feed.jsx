@@ -7,18 +7,19 @@ import Card from './Card'
 import { useEffect } from 'react'
 
 const Feed = () => {
+ 
     const dispatch=useDispatch()
     const feed=useSelector(store=>store.feed)
 
     const fetchFeedData=async()=>{
-        if(feed) return 
+        if(feed.length>0) return 
         try{
             const res=await axios.get(BASE_URL+"/feed",{withCredentials:true})
             console.log("feed")
             dispatch(addFeed(res.data))
            
         }catch(err){
-            console.log(err)
+            console.log(err.message)
         }
     }
 
@@ -30,11 +31,17 @@ useEffect(()=>{
   return (
 
   <>
-    { feed ? (
+    { feed.length>0 ? (
       <Card data={feed[0]} />
-    ) : (
-      <p>No Users Found</p>
-    )}
+    ) :(
+    <div className="flex flex-col items-center my-5">
+      <span className="text-5xl animate-bounce">🤖</span>
+      <p className="mt-2 text-pink-600 font-semibold">
+        No users found
+      </p>
+     
+    </div>
+  )}
 
     </>
   )

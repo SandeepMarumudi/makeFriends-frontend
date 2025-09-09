@@ -41,7 +41,7 @@ const userData=useSelector(store=>store.user)
    <>
    <Navbar/>
    <Outlet/>
-   <Footer/>
+ 
  
    </>
   )

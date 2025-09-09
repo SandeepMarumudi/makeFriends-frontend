@@ -5,12 +5,13 @@ import axios from "axios";
 import BASE_URL from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 import Toast from "./Toast";
+import { useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [lastName, setLastName] = useState(user?.lastName);
   const [gender, setGender] = useState(user?.gender);
   const [age, setAge] = useState(user?.age);
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
@@ -18,6 +19,7 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
+  const navigate=useNavigate()
 
   // const handleFileChange = (e) => {
   //   const file = e.target.files[0];
@@ -46,7 +48,8 @@ const Profile = () => {
       setShowToast(true);
       setTimeout(() => {
         setShowToast(false);
-      }, 3000);
+      }, 2000);
+       return navigate("/")
     } catch (err) {
       console.log(err?.response?.data);
       setError(err?.response?.data);
@@ -70,79 +73,86 @@ const Profile = () => {
 
 
   return(
-    <div>
-      {showToast && <Toast />}
-      <div className="flex justify-center my-10 ">
-        <div className="flex justify-center mx-5 ">
-          <div className="card  bg-base-300 w-96 shadow-sm ">
-            <div className="card-body items-center text-center">
-              <fieldset className="fieldset">
-                <legend className="fieldset-legend ">Firstname:</legend>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="input"
-                />
-                <legend className="fieldset-legend mx-16 ">Lastname:</legend>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="input"
-                />
+  <div>
+  {showToast && <Toast />}
+  <div className="flex flex-col md:flex-row justify-center items-center gap-8 my-10 px-4">
+    {/* Profile Form */}
+    <div className="w-full max-w-md">
+      <div className="card bg-base-300 shadow-sm">
+        <div className="card-body items-center text-center">
+          <fieldset className="fieldset w-full">
+            <legend className="fieldset-legend">Firstname:</legend>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="input w-full"
+            />
 
-                <legend className="fieldset-legend mx-16 ">Gender:</legend>
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="select"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
+            <legend className="fieldset-legend mt-4">Lastname:</legend>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="input w-full"
+            />
 
-                <legend className="fieldset-legend mx-16 ">Age:</legend>
-                <input
-                  type="text"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  className="input"
-                />
+            <legend className="fieldset-legend mt-4">Gender:</legend>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="select w-full"
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
 
-                <legend className="fieldset-legend mx-16 ">Photo:</legend>
-                <input
-                  type="text"
-                  value={photoUrl}
-                  onChange={(e)=>setPhotoUrl(e.target.value)}
-                  className="input"
-                  placeholder="only URL"
-                />
-                <legend className="fieldset-legend mx-16 ">About:</legend>
-                <input
-                  type="text"
-                  value={about}
-                  onChange={(e) => setAbout(e.target.value)}
-                  className="input"
-                />
-              </fieldset>
-              <div>
-                <p className="text-red-500"></p>
-              </div>
-              <p className="text-red-500">{error}</p>
-              <div className="card-actions">
-                <button className="btn btn-primary" onClick={saveProfile}>
-                  Save
-                </button>
-              </div>
-            </div>
+            <legend className="fieldset-legend mt-4">Age:</legend>
+            <input
+              type="text"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="input w-full"
+            />
+
+            <legend className="fieldset-legend mt-4">Photo:</legend>
+            <input
+              type="text"
+              value={photoUrl}
+              onChange={(e) => setPhotoUrl(e.target.value)}
+              className="input w-full"
+              placeholder="only URL"
+            />
+
+            <legend className="fieldset-legend mt-4">About:</legend>
+            <input
+              type="text"
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
+              className="input w-full"
+            />
+          </fieldset>
+
+          <p className="text-red-500">{error}</p>
+
+          <div className="card-actions mt-4">
+            <button className="btn btn-primary w-full" onClick={saveProfile}>
+              Save
+            </button>
           </div>
         </div>
-        <Card data={{ firstName, lastName, gender, age, photoUrl, about }} />
       </div>
     </div>
+
+    {/* Preview Card */}
+    <div className="w-full max-w-sm">
+      <Card data={{ firstName, lastName, gender, age, photoUrl, about }} />
+    </div>
+  </div>
+</div>
+
   )
   
 };
